@@ -6,7 +6,7 @@ from .models import User
 from .serializers import UserSerializer
 
 
-@api_view(['GET'])
+@api_view(['POST'])
 def register(request):
     data = request.data
 
