@@ -8,7 +8,7 @@ from orders.serializers import OrderSerializer
 from users.authentication import JWTAuthentication
 
 
-class OrderGenericAPIView( generics.GenericAPIView, mixins.ListModelMixinn, mixins.RetrieveModelMixin ):
+class OrderGenericAPIView( generics.GenericAPIView, mixins.ListModelMixin, mixins.RetrieveModelMixin ):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
     queryset = Order.objects.all()
