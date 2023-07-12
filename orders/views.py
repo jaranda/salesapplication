@@ -3,16 +3,16 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from config.pagination import CustomPagination
-from products.models import Product
-from products.serializers import ProductSerializer
+from orders.models import Order
+from orders.serializers import OrderSerializer
 from users.authentication import JWTAuthentication
 
 
-class OrderGenericAPIView( generics.GenericAPIView, mixins.ListModelMixinn ):
+class OrderGenericAPIView( generics.GenericAPIView, mixins.ListModelMixinn, mixins.RetrieveModelMixin ):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
-    queryset = Product.objects.all()
-    serializer_class = ProductSerializer
+    queryset = Order.objects.all()
+    serializer_class = OrderSerializer
     pagination_class = CustomPagination
 
     def get(self, request, pk=None):
