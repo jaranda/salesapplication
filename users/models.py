@@ -3,10 +3,10 @@ from django.db import models
 
 
 class Permission(models.Model):
-    name: models.CharField(max_length=200)
+    name = models.CharField(max_length=200)
 
 class Role(models.Model):
-    name: models.CharField(max_length=200)
+    name = models.CharField(max_length=200)
     permissions = models.ManyToManyField(Permission)
 
 class User(AbstractUser):
