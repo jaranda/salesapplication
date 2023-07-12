@@ -4,6 +4,7 @@ from users.views import (
     AuthenticatedUser,
     PermissionAPIView,
     RoleViewSet,
+    UserGenericAPIView,
     login,
     logout,
     register,
@@ -23,5 +24,7 @@ urlpatterns = [
         'get': 'retrieve',
         'put': 'update',
         'delete': 'destroy'
-    }))
+    })),
+    path('users/', UserGenericAPIView.as_view()),
+    path('users/<str:pk>', UserGenericAPIView.as_view())
 ]
