@@ -8,6 +8,7 @@ from config.pagination import CustomPagination
 
 from .authentication import JWTAuthentication, generate_access_token
 from .models import Permission, Role, User
+from .permissions import ViewPermissions
 from .serializers import PermissionSerializer, RoleSerializer, UserSerializer
 
 
@@ -82,7 +83,8 @@ class PermissionAPIView(APIView):
 
 class RoleViewSet(viewsets.ViewSet):
     authentication_classes = [JWTAuthentication]
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated & ViewPermissions]
+    permission_object = 'roles'
 
     def list(self, request):
         serializer = RoleSerializer(Role.objects.all(), many=True)
@@ -124,7 +126,8 @@ class RoleViewSet(viewsets.ViewSet):
 
 class UserGenericAPIView(generics.GenericAPIView, mixins.ListModelMixin, mixins.RetrieveModelMixin, mixins.CreateModelMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin):
     authentication_classes = [JWTAuthentication]
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated & ViewPermissions]
+    permission_object = 'users'
     queryset = User.objects.all()
     serializer_class = UserSerializer
     pagination_class = CustomPagination
