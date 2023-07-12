@@ -13,8 +13,8 @@ class ProductGenericAPIView(
     mixins.UpdateModelMixin, mixins.DestroyModelMixin):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
     pagination_class = CustomPagination
 
     def get(self, request, pk=None):
@@ -26,20 +26,11 @@ class ProductGenericAPIView(
         return self.list(request)    
 
     def post(self, request):
-        request.data.update({
-            'password': 1234,
-            'role': request.data['role_id']
-        })
         return Response({
             'data': self.create(request).data
         })
     
     def put(self, request, pk=None):
-        if(request.data['role_id']):
-            request.data.update({
-                'role': request.data['role_id']
-            })
-        
         return Response({
             'data': self.partial_update(request, pk).data
         })
